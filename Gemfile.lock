@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/jayuen/ai4r
-  revision: 7891574d801a4afedadf02a0498798612247882e
+  revision: 7bc451d4ee54769003643ebed234bdf0f2de8878
+  branch: make_chromosome_easier_to_override
   specs:
     ai4r (1.13)
 
