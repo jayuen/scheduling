@@ -1,0 +1,15 @@
+GIT
+  remote: https://github.com/jayuen/ai4r
+  revision: 7891574d801a4afedadf02a0498798612247882e
+  specs:
+    ai4r (1.13)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ai4r!
