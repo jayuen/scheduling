@@ -1,16 +1,18 @@
 class SchedulingChromosome
   attr_accessor :normalized_fitness
   attr_accessor :sequence
+  attr_accessor :schedule_start_date
 
-  def initialize(demands)
+  def initialize(demands, schedule_start_date=SchedulingData.start_date)
     @sequence = demands
+    @schedule_start_date = schedule_start_date
   end
 
   def fitness
     return @chromosome_fitness if @chromosome_fitness
 
     chromosome_fitness = 0
-    previous_finish_time = Data.start_date
+    previous_finish_time = schedule_start_date
 
     # calculate finished_time
     sequence.each do |demand|
@@ -36,14 +38,10 @@ class SchedulingChromosome
     end
 
     @chromosome_fitness = chromosome_fitness
-    puts "**** CHROMOSOME ***** "
-    display
-    @chromosome_fitness
   end
 
   def display
-    p @sequence.map {|demand| demand.id}.join(' ')
-    p @chromosome_fitness
+    @sequence.map {|demand| demand.id}.join(' ')
   end
 
   def self.mutate(chromosome)
@@ -80,19 +78,10 @@ class SchedulingChromosome
       child_sequence[index] = unscheduled_demands[i]
     end
 
-    child_chromosome = SchedulingChromosome.new(child_sequence)
-
-    puts "** REPRODUCING **"
-    parent_a.display
-    parent_b.display
-    child_chromosome.display
-    puts "** REPRODUCING **"
-
-    child_chromosome
-
+    child_chromosome = SchedulingChromosome.new(child_sequence, parent_a.schedule_start_date)
   end
 
   def self.seed
-    SchedulingChromosome.new(Data.demands.shuffle)
+    SchedulingChromosome.new(SchedulingData.demands.shuffle, SchedulingData.start_date)
   end
 end

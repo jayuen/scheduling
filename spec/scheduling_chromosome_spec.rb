@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe SchedulingChromosome do
-  let(:one) {Demand.new(1)}
-  let(:two) {Demand.new(2)}
-  let(:three) {Demand.new(3)}
-  let(:four) {Demand.new(4)}
+  let(:now) {Time.now}
+  let(:hour) {3600}
+  let(:one) {Demand.new(1, 10, nil, now + hour)}
+  let(:two) {Demand.new(2, 20, nil, now + 2*hour)}
+  let(:three) {Demand.new(3, 30, nil, now + 3*hour)}
+  let(:four) {Demand.new(4, 40, nil, now + 4*hour)}
 
   describe 'reproduce' do
     it 'generates a child with a unique sequence' do
@@ -32,6 +34,16 @@ describe SchedulingChromosome do
       child = SchedulingChromosome.reproduce(a, b)
 
       expect(child.sequence).to eq([one, three, two, four])
+    end
+  end
+
+  describe 'fitness' do
+    it 'returns a negative score when late' do
+      one.due_date = now
+      one.minutes = 60
+      late = SchedulingChromosome.new([one], now)
+
+      expect(late.fitness).to eq(-1)
     end
   end
 end
