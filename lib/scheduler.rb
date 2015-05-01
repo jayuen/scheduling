@@ -65,24 +65,48 @@ class SchedulingChromosome
   def self.mutate(chromosome)
   end
 
-  def self.reproduce(a, b)
+  def self.reproduce(parent_a, parent_b)
+    placeholder = 'tbd'
+    tbd_indices = []
     child_sequence = []
-    a.sequence.each_with_index do |demand, i|
-      if (i % 2 == 0) 
-        child_sequence << a.sequence[i]
+    parent_a.sequence.each_with_index do |demand, i|
+      if child_sequence.include?(parent_a.sequence[i]) && child_sequence.include?(parent_b.sequence[i]) 
+        child_sequence << placeholder 
+        tbd_indices << i
       else
-        child_sequence << b.sequence[i]
-      end
+        if (i % 2 == 0) 
+          if child_sequence.include?(parent_a.sequence[i])
+            child_sequence << parent_b.sequence[i]
+          else 
+            child_sequence << parent_a.sequence[i]
+          end
+        else
+          if child_sequence.include?(parent_b.sequence[i])
+            child_sequence << parent_a.sequence[i]
+          else 
+            child_sequence << parent_b.sequence[i]
+          end
+        end
+      end      
     end
-    child = SchedulingChromosome.new(child_sequence)
+
+    unscheduled_demands = parent_a.sequence - child_sequence
+
+    tbd_indices.each_with_index do |index, i|
+      child_sequence[index] = unscheduled_demands[i]
+    end
+
+    raise unless child_sequence.uniq
+    child_chromosome = SchedulingChromosome.new(child_sequence)
 
     puts "** REPRODUCING **"
-    a.display
-    b.display
-    child.display
+    parent_a.display
+    parent_b.display
+    child_chromosome.display
     puts "** REPRODUCING **"
 
-    child
+    child_chromosome
+
   end
 
   def self.seed
@@ -97,7 +121,7 @@ puts "Demand"
 p Data.demands
 
 puts "Beginning genetic search, please wait... "
-initial_population_size = 10 # 800
+initial_population_size = 500 # 800
 generations = 100 #1000
 
 
