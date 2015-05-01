@@ -18,8 +18,6 @@ class SchedulingChromosome
     sequence.each do |demand|
       demand.finished_date = previous_finish_time + (demand.minutes.to_f * 60) 
       previous_finish_time = demand.finished_date
-
-      # p demand
     end
 
     # assesses fitness of entire population
@@ -30,8 +28,8 @@ class SchedulingChromosome
 
       time_delta = demand.due_date - demand.finished_date
 
-     if time_delta < 0 # it's late
-        gene_fitness = time_delta.to_f/(60*60) # hours late        
+      if time_delta < 0 # it's late
+         gene_fitness = time_delta.to_f/(60*60) # hours late        
       end
 
       chromosome_fitness += gene_fitness
@@ -78,10 +76,15 @@ class SchedulingChromosome
       child_sequence[index] = unscheduled_demands[i]
     end
 
-    child_chromosome = SchedulingChromosome.new(child_sequence, parent_a.schedule_start_date)
+    SchedulingChromosome.new(child_sequence, parent_a.schedule_start_date)
   end
 
   def self.seed
     SchedulingChromosome.new(SchedulingData.demands.shuffle, SchedulingData.start_date)
+  end
+
+  def self.score
+    chromosome = SchedulingChromosome.new(SchedulingData.demands, SchedulingData.start_date)
+    chromosome.fitness
   end
 end
