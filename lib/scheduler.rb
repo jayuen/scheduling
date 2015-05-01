@@ -51,7 +51,7 @@ class SchedulingChromosome
       chromosome_fitness += gene_fitness
     end
 
-    @chromosome_fitness = chromosome_fitness * -1
+    @chromosome_fitness = chromosome_fitness
     puts "**** CHROMOSOME ***** "
     display
     @chromosome_fitness
@@ -66,7 +66,23 @@ class SchedulingChromosome
   end
 
   def self.reproduce(a, b)
-    a
+    child_sequence = []
+    a.sequence.each_with_index do |demand, i|
+      if (i % 2 == 0) 
+        child_sequence << a.sequence[i]
+      else
+        child_sequence << b.sequence[i]
+      end
+    end
+    child = SchedulingChromosome.new(child_sequence)
+
+    puts "** REPRODUCING **"
+    a.display
+    b.display
+    child.display
+    puts "** REPRODUCING **"
+
+    child
   end
 
   def self.seed
@@ -82,7 +98,7 @@ p Data.demands
 
 puts "Beginning genetic search, please wait... "
 initial_population_size = 10 # 800
-generations = 1 #1000
+generations = 100 #1000
 
 
 search = Ai4r::GeneticAlgorithm::GeneticSearch.new(initial_population_size, generations, SchedulingChromosome)
