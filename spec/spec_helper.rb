@@ -1,1 +1,1 @@
-require '../lib'
+require './lib/scheduling_chromosome'
