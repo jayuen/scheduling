@@ -80,7 +80,6 @@ class SchedulingChromosome
       child_sequence[index] = unscheduled_demands[i]
     end
 
-    raise unless child_sequence.uniq
     child_chromosome = SchedulingChromosome.new(child_sequence)
 
     puts "** REPRODUCING **"
