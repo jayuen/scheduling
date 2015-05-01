@@ -7,6 +7,7 @@ class Scheduler
   def self.score(filename, start_date)
     SchedulingData.load_demand(filename)
     SchedulingData.start_date = Time.parse(start_date)
+    p SchedulingChromosome.score
   end
 
   def self.run(filename, start_date, initial_population_size, generations)

@@ -11,31 +11,56 @@ class SchedulingChromosome
   def fitness
     return @chromosome_fitness if @chromosome_fitness
 
+    set_finish_dates
+    lateness_fitness = calculate_lateness_fitness
+    jitness = calculate_jitness
+
+    @chromosome_fitness = lateness_fitness + jitness
+  end
+
+  def calculate_lateness_fitness
     chromosome_fitness = 0
-    previous_finish_time = schedule_start_date
-
-    # calculate finished_time
-    sequence.each do |demand|
-      demand.finished_date = previous_finish_time + (demand.minutes.to_f * 60) 
-      previous_finish_time = demand.finished_date
-    end
-
-    # assesses fitness of entire population
-    sequence.each do |demand|
     
-      # calculate fitness
+    @sequence.each do |demand|
       gene_fitness = 0
 
       time_delta = demand.due_date - demand.finished_date
 
-      if time_delta < 0 # it's late
+      if time_delta < 0
          gene_fitness = time_delta.to_f/(60*60) # hours late        
       end
 
       chromosome_fitness += gene_fitness
     end
 
-    @chromosome_fitness = chromosome_fitness
+    chromosome_fitness
+  end
+
+  def calculate_jitness
+    chromosome_fitness = 0
+
+    @sequence.each do |demand|
+      gene_fitness = 0
+
+      time_delta = demand.finished_date - demand.due_date
+
+      if time_delta < 0
+         gene_fitness = time_delta.to_f/(60*60)
+      end
+
+      chromosome_fitness += gene_fitness
+    end
+
+    chromosome_fitness
+  end
+
+  def set_finish_dates
+    previous_finish_time = schedule_start_date
+
+    @sequence.each do |demand|
+      demand.finished_date = previous_finish_time + (demand.minutes.to_f * 60) 
+      previous_finish_time = demand.finished_date
+    end
   end
 
   def display

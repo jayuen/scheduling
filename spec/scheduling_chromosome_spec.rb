@@ -45,6 +45,15 @@ describe SchedulingChromosome do
 
       expect(late.fitness).to eq(-1)
     end
+
+    it 'returns a positive score when early' do
+      one.due_date = now+2*hour
+      one.minutes = 60
+      early = SchedulingChromosome.new([one], now)
+
+      expect(early.fitness).to eq(-1)
+    end
+
   end
 end
 
