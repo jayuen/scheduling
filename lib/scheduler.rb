@@ -1,7 +1,6 @@
 require 'ai4r'
 require './scheduling_chromosome'
 
-Demand = Struct.new(:id, :minutes, :finished_date, :due_date)
 class Data
   class << self
     attr_accessor :demands, :start_date
