@@ -76,24 +76,24 @@ class SchedulingChromosome
     tbd_indices = []
     child_sequence = []
     parent_a.sequence.each_with_index do |demand, i|
-      if child_sequence.include?(parent_a.sequence[i]) && child_sequence.include?(parent_b.sequence[i]) 
-        child_sequence << placeholder 
+      if child_sequence.include?(parent_a.sequence[i]) && child_sequence.include?(parent_b.sequence[i])
+        child_sequence << placeholder
         tbd_indices << i
       else
-        if (i % 2 == 0) 
+        if (i % 2 == 0)
           if child_sequence.include?(parent_a.sequence[i])
             child_sequence << parent_b.sequence[i]
-          else 
+          else
             child_sequence << parent_a.sequence[i]
           end
         else
           if child_sequence.include?(parent_b.sequence[i])
             child_sequence << parent_a.sequence[i]
-          else 
+          else
             child_sequence << parent_b.sequence[i]
           end
         end
-      end      
+      end
     end
 
     unscheduled_demands = parent_a.sequence - child_sequence
