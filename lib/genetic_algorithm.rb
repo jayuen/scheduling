@@ -69,7 +69,6 @@ module GeneticAlgorithm
     end
 
     def display(chromo)
-
       puts "Chromosome: #{chromo.sequence.map {|demand| demand.id}.join(' ')}"
       puts "Fitness: #{chromo.chromosome_fitness}"
       puts ' '
@@ -95,7 +94,7 @@ module GeneticAlgorithm
     #
     # 1. The fitness function is evaluated for each individual, providing fitness values
     # 2. The population is sorted by descending fitness values.
-    # 3. The fitness values ar then normalized. (Highest fitness gets 1, lowest fitness gets 0). The normalized value is stored in the "normalized_fitness" attribute of the chromosomes.
+    # 3. The fitness values are then normalized. (Highest fitness gets 1, lowest fitness gets 0). The normalized value is stored in the "normalized_fitness" attribute of the chromosomes.
     # 4. A random number R is chosen. R is between 0 and the accumulated normalized value (all the normalized fitness values added togheter).
     # 5. The selected individual is the first one whose accumulated normalized value (its is normalized value plus the normalized values of the chromosomes prior it) greater than R.
     # 6. We repeat steps 4 and 5, 2/3 times the population size.
@@ -119,17 +118,57 @@ module GeneticAlgorithm
       selected_to_breed
     end
 
-
     # added by cww 2015-06-12
     # use pareto efficiency to rank optimality of each solution
     def selection2
-      # update fitness values for each chromosome
+      # update fitness object for each chromosome
+      # population.map(|chromo| chromo.fitness)
+      # pareto_rank_population
 
-      # execute
+      # execute pareto optimization algorithm
 
+      # select
+      # return
+    end
 
+    def pareto_rank_population
+      # # reset ranking parameters
+      # @population.map do |chromo|
+      #   chromo.dominated = false
+      #   chromo.rank = 0
+      #
+      # end
+      #
+      # @population.each do |subject_chromo|
+      #
+      #   # if chromosome hasn't been dominated
+      #   if subject_chromo.dominated = false
+      #     @population.each do |compare_chromo|
+      #       if dominated?(subject_chromo, compare_chromo)
+      #         subject_chromo.dominated = true
+      #         next
+      #       end
+      #     end
+      #   end
+      # end
+      #
+      # # set ranks
+      # rank = 0
+      # @population.each do |chromosome|
+      #
+      #   chromosome.rank = rank
+      #   rank += 1
+      # end
+    end
 
-
+    # evaluates whether subject chromosome is dominated by comparison chromosome
+    def dominated?(subject, comparison)
+      if subject[0] > comparison[0]
+        if subject[1] > comparison[1]
+          return true
+        end
+      end
+      false
     end
 
     # We combine each pair of selected chromosome using the method
