@@ -62,9 +62,11 @@ class SchedulingChromosome
   end
 
   def calculates_labour
+    chromosome_labour = 0
 
+    @sequence.each { |demand| chromosome_labour += demand.num_people.to_f * demand.minutes/60 }
 
-
+    chromosome_labour
   end
 
   def set_finish_date(demand)

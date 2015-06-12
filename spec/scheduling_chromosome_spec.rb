@@ -3,10 +3,10 @@ require 'spec_helper'
 describe SchedulingChromosome do
   let(:now) {Time.now}
   let(:hour) {3600}
-  let(:one) {Demand.new(1, 10, nil, now + hour)}
-  let(:two) {Demand.new(2, 20, nil, now + 2*hour)}
-  let(:three) {Demand.new(3, 30, nil, now + 3*hour)}
-  let(:four) {Demand.new(4, 40, nil, now + 4*hour)}
+  let(:one) {Demand.new(1, 10, nil, now + hour, 1)}
+  let(:two) {Demand.new(2, 20, nil, now + 2*hour, 2)}
+  let(:three) {Demand.new(3, 30, nil, now + 3*hour, 3)}
+  let(:four) {Demand.new(4, 40, nil, now + 4*hour, 4)}
 
   describe 'reproduce' do
     it 'generates a child with a unique sequence' do
@@ -54,8 +54,12 @@ describe SchedulingChromosome do
       expect(chromo.calculate_jitness).to be < 0
     end
 
-    it 'updates the fitness object' do
+    it 'calculates the labour fitness' do
+      one.minutes = 60
+      two.minutes = 120
+      chromo = SchedulingChromosome.new([one, two], now)
 
+      expect(chromo.calculates_labour).to eq(5)
     end
 
   end
