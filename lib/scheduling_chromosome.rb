@@ -14,9 +14,9 @@ class SchedulingChromosome
 
     set_finish_dates
     lateness_fitness = calculate_lateness_fitness
-    # jitness = calculate_jitness
+    jitness = calculate_jitness
 
-    @chromosome_fitness = lateness_fitness #+ jitness
+    @chromosome_fitness = lateness_fitness + jitness
   end
 
   def calculate_lateness_fitness
