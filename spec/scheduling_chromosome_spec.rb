@@ -59,7 +59,18 @@ describe SchedulingChromosome do
       two.minutes = 120
       chromo = SchedulingChromosome.new([one, two], now)
 
-      expect(chromo.calculates_labour).to eq(5)
+      expect(chromo.calculate_labour_fitness).to eq(5)
+    end
+
+    it 'populates fitness array (for lateness and labour)' do
+      one.minutes = 60
+      one.due_date = now
+
+      two.minutes = 120
+      two.due_date = now
+      chromo = SchedulingChromosome.new([one, two], now)
+
+      expect(chromo.fitness).to eq([-4.0, 5.0])
     end
 
   end

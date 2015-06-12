@@ -7,20 +7,17 @@ class SchedulingChromosome
   def initialize(demands, schedule_start_date=SchedulingData.start_date)
     @sequence = demands
     @schedule_start_date = schedule_start_date
-    @chromosome_fitness = []
   end
 
   def fitness
-    # return @chromosome_fitness if @chromosome_fitness
-    #
-    #
-    # lateness_fitness = calculate_lateness_fitness
-    # # jitness = calculate_jitness
-    #
-    # @chromosome_fitness = [lateness_fitness, jitness]
-    #
-    # # @chromosome_fitness = lateness_fitness + jitness
-    0
+    return @chromosome_fitness if @chromosome_fitness
+
+    lateness_fitness = calculate_lateness_fitness
+    labour_fitness = calculate_labour_fitness
+    # jitness = calculate_jitness
+
+    @chromosome_fitness = [lateness_fitness, labour_fitness]
+
   end
 
   def calculate_lateness_fitness
@@ -61,7 +58,7 @@ class SchedulingChromosome
     chromosome_jitness
   end
 
-  def calculates_labour
+  def calculate_labour_fitness
     chromosome_labour = 0
 
     @sequence.each { |demand| chromosome_labour += demand.num_people.to_f * demand.minutes/60 }
