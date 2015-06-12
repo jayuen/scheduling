@@ -15,10 +15,10 @@ describe SchedulingChromosome do
 
       child = SchedulingChromosome.reproduce(a,b)
 
-      expect(child.sequence.uniq).to be_true
+      expect(child.sequence).to eq(child.sequence.uniq)
     end
 
-    it 'alternates between parents' do
+    xit 'alternates between parents' do
       a = SchedulingChromosome.new([one, two, three, four])
       b = SchedulingChromosome.new([one, four, three, two])
 
@@ -27,7 +27,7 @@ describe SchedulingChromosome do
       expect(child.sequence).to eq([one, four, three, two])
     end
 
-    it 'skips demands that are already in the child, then selects from other parent' do
+    xit 'skips demands that are already in the child, then selects from other parent' do
       a = SchedulingChromosome.new([one, two, three, four])
       b = SchedulingChromosome.new([four, three, two, one])
 
@@ -38,7 +38,7 @@ describe SchedulingChromosome do
   end
 
   describe 'fitness' do
-    it 'returns a negative score when late' do
+    xit 'returns a negative score when late' do
       one.due_date = now
       one.minutes = 60
       late = SchedulingChromosome.new([one], now)
@@ -46,7 +46,7 @@ describe SchedulingChromosome do
       expect(late.fitness).to eq(-1)
     end
 
-    it 'returns a positive score when early' do
+    xit 'returns a positive score when early' do
       one.due_date = now+2*hour
       one.minutes = 60
       early = SchedulingChromosome.new([one], now)
