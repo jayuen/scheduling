@@ -38,20 +38,24 @@ describe SchedulingChromosome do
   end
 
   describe 'fitness' do
-    it 'returns a negative score when late' do
+    it 'returns a negative score for lateness' do
       one.due_date = now
       one.minutes = 60
-      late = SchedulingChromosome.new([one], now)
+      chromo = SchedulingChromosome.new([one], now)
 
-      expect(late.fitness).to eq(-1)
+      expect(chromo.calculate_lateness_fitness).to be < 0
     end
 
-    it 'returns a positive score when early' do
+    it 'returns a negative score when early' do
       one.due_date = now+2*hour
       one.minutes = 60
-      early = SchedulingChromosome.new([one], now)
+      chromo = SchedulingChromosome.new([one], now)
 
-      expect(early.fitness).to eq(-1)
+      expect(chromo.calculate_jitness).to be < 0
+    end
+
+    it 'updates the fitness object' do
+
     end
 
   end
