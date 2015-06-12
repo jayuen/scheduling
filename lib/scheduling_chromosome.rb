@@ -11,19 +11,20 @@ class SchedulingChromosome
   end
 
   def fitness
-    return @chromosome_fitness if @chromosome_fitness
-
-
-    lateness_fitness = calculate_lateness_fitness
-    # jitness = calculate_jitness
-
-    @chromosome_fitness = [lateness_fitness, jitness]
-
-    # @chromosome_fitness = lateness_fitness + jitness
+    # return @chromosome_fitness if @chromosome_fitness
+    #
+    #
+    # lateness_fitness = calculate_lateness_fitness
+    # # jitness = calculate_jitness
+    #
+    # @chromosome_fitness = [lateness_fitness, jitness]
+    #
+    # # @chromosome_fitness = lateness_fitness + jitness
+    0
   end
 
   def calculate_lateness_fitness
-    chromosome_fitness = 0
+    chromosome_lateness = 0
 
     @sequence.each do |demand|
       gene_fitness = 0
@@ -35,14 +36,14 @@ class SchedulingChromosome
          gene_fitness = time_delta.to_f/(60*60) # hours late
       end
 
-      chromosome_fitness += gene_fitness
+      chromosome_lateness += gene_fitness
     end
 
-    chromosome_fitness
+    chromosome_lateness
   end
 
   def calculate_jitness
-    chromosome_fitness = 0
+    chromosome_jitness = 0
 
     @sequence.each do |demand|
       gene_fitness = 0
@@ -54,10 +55,16 @@ class SchedulingChromosome
          gene_fitness = time_delta.to_f/(60*60)
       end
 
-      chromosome_fitness += gene_fitness
+      chromosome_jitness += gene_fitness
     end
 
-    chromosome_fitness
+    chromosome_jitness
+  end
+
+  def calculates_labour
+
+
+
   end
 
   def set_finish_date(demand)
