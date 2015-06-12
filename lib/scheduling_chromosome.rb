@@ -3,10 +3,12 @@ class SchedulingChromosome
   attr_accessor :sequence
   attr_accessor :schedule_start_date
   attr_accessor :chromosome_fitness
+  attr_accessor :rank
 
   def initialize(demands, schedule_start_date=SchedulingData.start_date)
     @sequence = demands
     @schedule_start_date = schedule_start_date
+    @chromosome_fitness = 0
   end
 
   def fitness
