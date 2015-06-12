@@ -1,3 +1,5 @@
+require 'csv'
+
 class SchedulingData
   class << self
     attr_accessor :demands, :start_date

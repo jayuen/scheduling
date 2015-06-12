@@ -1,4 +1,5 @@
-require 'ai4r'
+# require 'ai4r'
+require './genetic_algorithm'
 require './scheduling_chromosome'
 require './scheduling_data'
 require './demand'
@@ -15,7 +16,7 @@ class Scheduler
     SchedulingData.start_date = Time.parse(start_date)
 
     puts "Beginning genetic search, please wait... "
-    search = Ai4r::GeneticAlgorithm::GeneticSearch.new(initial_population_size, generations, SchedulingChromosome)
+    search = GeneticAlgorithm::GeneticSearch.new(initial_population_size, generations, SchedulingChromosome)
     result = search.run
     puts "FINAL CHROMOSOME"
     p result.display
